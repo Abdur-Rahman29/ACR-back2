@@ -92,6 +92,7 @@ def ado_repo(request):
                     'content':file_content
 
                 })
+                print(reviews_data)
 
         return JsonResponse({'reviews_data': reviews_data}, safe=False)
 
