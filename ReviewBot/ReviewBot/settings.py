@@ -36,7 +36,7 @@ import os
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-DATA_UPLOAD_MAX_MEMORY_SIZE = 10485760
+DATA_UPLOAD_MAX_MEMORY_SIZE = 209715200
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 
 # Save the session data on every request, even if it hasn't been modified (optional)
