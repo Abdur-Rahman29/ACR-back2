@@ -1,0 +1,16 @@
+groq
+Django==3.2.16 
+python-docx
+python-dotenv
+djangorestframework
+python-pptx
+pdfplumber
+django-cors-headers
+streamlit
+PyGithub
+GitPython
+httpx
+numpy
+pandas
+requests
+rich
