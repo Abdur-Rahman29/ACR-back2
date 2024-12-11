@@ -29,8 +29,8 @@ ALLOWED_HOSTS = [
     'localhost',  # Local development
     '127.0.0.1',  # Local development
     '::1',  # Local development
-    'acr-back-automated-code-review.apps.opendev.hq.globalcashaccess.us',  # OpenShift Route
-    'acr-front-automated-code-review.apps.opendev.hq.globalcashaccess.us',  # Add any other domains you want to allow
+    'acr-back-code-review.apps.opendev.hq.globalcashaccess.us',  # OpenShift Route
+    'acr-front-code-review.apps.opendev.hq.globalcashaccess.us',  # Add any other domains you want to allow
 ]
 import os
 MEDIA_URL = '/media/'
