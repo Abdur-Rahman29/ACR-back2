@@ -25,7 +25,13 @@ SECRET_KEY = 'django-insecure-_1g8papf5r=g2r2f03*eul&70yvymm)#omr@+3p%bz5sub=d#b
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'localhost',  # Local development
+    '127.0.0.1',  # Local development
+    '::1',  # Local development
+    'acr-back-automated-code-review.apps.opendev.hq.globalcashaccess.us',  # OpenShift Route
+    'acr-front-automated-code-review.apps.opendev.hq.globalcashaccess.us',  # Add any other domains you want to allow
+]
 import os
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
