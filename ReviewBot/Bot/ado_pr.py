@@ -90,7 +90,7 @@ def get_pr_repository_info(pr):
 def get_pr_data(request):
     authorization_code = request.data.get('code')
     token_url = "https://app.vssps.visualstudio.com/oauth2/token"
-    redirect_uri="https://acr-front-automated-code-review.apps.opendev.hq.globalcashaccess.us/"
+    redirect_uri="https://acr-front-code-review.apps.opendev.hq.globalcashaccess.us/"
     data = {
         'client_assertion_type': 'urn:ietf:params:oauth:client-assertion-type:jwt-bearer',
         'client_assertion': client_secret,
