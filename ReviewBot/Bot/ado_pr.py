@@ -88,23 +88,25 @@ def get_pr_repository_info(pr):
 
 @api_view(['POST'])
 def get_pr_data(request):
-    authorization_code = request.data.get('code')
-    token_url = "https://app.vssps.visualstudio.com/oauth2/token"
-    redirect_uri="https://acr-front-code-review.apps.opendev.hq.globalcashaccess.us/"
-    data = {
-        'client_assertion_type': 'urn:ietf:params:oauth:client-assertion-type:jwt-bearer',
-        'client_assertion': client_secret,
-        'grant_type': 'urn:ietf:params:oauth:grant-type:jwt-bearer',
-        'assertion': authorization_code,
-        'redirect_uri': redirect_uri
-    }
+    ado_pat=request.session.get('token')
+    if not ado_pat:
+        authorization_code = request.data.get('code')
+        token_url = "https://app.vssps.visualstudio.com/oauth2/token"
+        redirect_uri="https://acr-front-automated-code-review.apps.opendev.hq.globalcashaccess.us/"
+        data = {
+            'client_assertion_type': 'urn:ietf:params:oauth:client-assertion-type:jwt-bearer',
+            'client_assertion': client_secret,
+            'grant_type': 'urn:ietf:params:oauth:grant-type:jwt-bearer',
+            'assertion': authorization_code,
+            'redirect_uri': redirect_uri
+        }
 
-    response = requests.post(token_url, data=data)
-    response_data = response.json()
+        response = requests.post(token_url, data=data)
+        response_data = response.json()
 
-    # Step 3: Use the access token
-    ado_pat = response_data.get('access_token')
-    request.session['token']=ado_pat
+        # Step 3: Use the access token
+        ado_pat = response_data.get('access_token')
+        request.session['token']=ado_pat
     ado_url = request.data.get('repo_link')
     org_standards = request.FILES.get('orgFile')
     org_standards_content = load_documents_from_files(org_standards)
