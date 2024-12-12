@@ -37,9 +37,16 @@ def ado_repo(request):
             request.session['token']=ado_pat
         ado_url = request.data.get('url')
 
-        if not (org_standards and ado_pat and ado_url) :
-            return JsonResponse({'error': 'Both organizational standards file and directory must be provided.'},
+        if not org_standards:
+            return JsonResponse({'error': 'Organizational standards file must be provided.'},
                                 status=400)
+        if not ado_url:
+            return JsonResponse({'error': 'Repo link must be provided.'},
+                                status=400)
+        if not ado_pat:
+            return JsonResponse({'error': 'PAT must be provided.'},
+                                status=400)
+            
 
         organization, project, repo_name = extract_ado_info_from_url(ado_url)
 
