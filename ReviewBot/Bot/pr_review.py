@@ -21,6 +21,7 @@ from rest_framework.response import Response
 GITHUB_CLIENT_ID = "Ov23liAoWBA8cFwLh4ds"
 GITHUB_CLIENT_SECRET = "97bba278b113c6d649b591b6b30483146b9b274f"
 
+
 @api_view(['POST'])
 def handle_pr_operations(request):
     """
@@ -28,38 +29,43 @@ def handle_pr_operations(request):
     Fetch all PRs and their associated files using the GitHub token and repository URL.
 
     """
-    code = request.data.get("code")
+    token = request.session.get('token')
+    
+    if not token:
+        # If token not in session, proceed to fetch it
+        code = request.data.get("code")
 
-    if not code:
-        return Response(
-            {"error": "Authorization code not provided"},
-            status=status.HTTP_400_BAD_REQUEST,
-        )
+        if not code:
+            return JsonResponse(
+                {"error": "Authorization code not provided"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
 
-    # GitHub API Token Exchange
-    token_url = "https://github.com/login/oauth/access_token"
-    headers = {"Accept": "application/json"}
-    data = {
-        "client_id": GITHUB_CLIENT_ID,
-        "client_secret": GITHUB_CLIENT_SECRET,
-        "code": code,
-    }
+        # GitHub API Token Exchange
+        token_url = "https://github.com/login/oauth/access_token"
+        headers = {"Accept": "application/json"}
+        data = {
+            "client_id": GITHUB_CLIENT_ID,
+            "client_secret": GITHUB_CLIENT_SECRET,
+            "code": code,
+        }
 
-    response = requests.post(token_url, headers=headers, data=data)
+        response = requests.post(token_url, headers=headers, data=data)
 
-    if response.status_code == 200:
-        access_token = response.json().get("access_token")
-    else:
-        error = response.json().get("error", "Token exchange failed")
-        return Response(
-            {"error": error},
-            status=status.HTTP_400_BAD_REQUEST,
-        )
+        if response.status_code == 200:
+            token = response.json().get("access_token")
+            # Store token in session for future use
+            request.session['token'] = token
+        else:
+            error = response.json().get("error", "Token exchange failed")
+            return JsonResponse(
+                {"error": error},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
     org_standards = request.FILES.get('orgFile')
     org_standards=load_documents_from_files(org_standards)
     request.session['org_file']=org_standards
-    token = access_token
-    request.session['token']=token
+    
     print(token)
 
     repo_url = request.data.get('repo_link')
