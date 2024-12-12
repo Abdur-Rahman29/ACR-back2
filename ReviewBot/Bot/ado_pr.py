@@ -110,8 +110,15 @@ def get_pr_data(request):
     ado_url = request.data.get('repo_link')
     org_standards = request.FILES.get('orgFile')
     org_standards_content = load_documents_from_files(org_standards)
-    if not ado_pat or not ado_url or not org_standards:
-        return Response({"detail": "Token,org standards and repository link are required."}, status=status.HTTP_400_BAD_REQUEST)
+    if not org_standards:
+        return Response({'error': 'Organizational standards file must be provided.'},
+                            status=400)
+    if not ado_url:
+        return Response({'error': 'Repo link must be provided.'},
+                            status=400)
+    if not ado_pat:
+        return Response({'error': 'PAT must be provided.'},
+                            status=400)
 
     global organization, project, repository
     organization, project, repository = extract_ado_info_from_url(ado_url)
