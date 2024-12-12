@@ -36,6 +36,7 @@ def ado_repo(request):
             ado_pat = response_data.get('access_token')
             request.session['token']=ado_pat
         ado_url = request.data.get('url')
+        print(ado_pat)
 
         if not org_standards:
             return JsonResponse({'error': 'Organizational standards file must be provided.'},
