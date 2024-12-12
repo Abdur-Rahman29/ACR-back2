@@ -15,23 +15,25 @@ import base64,requests
 def ado_repo(request):
     try:
         org_standards = request.FILES.get('org_file')
-        authorization_code = request.data.get('code')
-        token_url = "https://app.vssps.visualstudio.com/oauth2/token"
-        redirect_uri="https://acr-front-code-review.apps.opendev.hq.globalcashaccess.us/"
-        client_secret = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Im9PdmN6NU1fN3AtSGpJS2xGWHo5M3VfVjBabyJ9.eyJjaWQiOiIxNDllNjNjYS01ODcyLTQ5Y2QtOTE1YS1iYjU4MTEyNWVlZmIiLCJjc2kiOiIzMmY3M2Y1NC1jOGNhLTQyMzQtYjczYi0zYmQ5OGJlNzA2OTQiLCJuYW1laWQiOiJhZDhmNzZkMi01NWNiLTQ5YjQtYjdkZS0yNWUwZjJkMGEwM2IiLCJpc3MiOiJhcHAudnN0b2tlbi52aXN1YWxzdHVkaW8uY29tIiwiYXVkIjoiYXBwLnZzdG9rZW4udmlzdWFsc3R1ZGlvLmNvbSIsIm5iZiI6MTczMzcyNjU3NSwiZXhwIjoxODkxNDk0MTM2fQ.c6YqwTfpViAoksh11wRD5l5KdGkECEuGGKcM1psVcZ20zABjQ3mrsJAhOCrFEH1vjiSt_oaA9c-1p_KXQcAmmzHyJ_O8BKA2cLKn1rJARLvtnBZKn04dXKDgbc7aDFYARXGQ6uqL134_3utAvGzDNzvmc5WpGmP2GZIj-dEaWeI37yjnlV4tMuUU2ZolEkNe9HJZwXmVSBrA-PXjlLovyk8BQ6R0VeS_oWgHivfpPPdPswXOrpUie8sQSWooemFfBGDIh4MEiFitsFnL7c-oOlmCG4uhj_tRPZbCz_qb6irHUfkmc0lQ5OYhPwgSgq117d51arsXLbmDJWQJ074AoA"
-        data = {
-            'client_assertion_type': 'urn:ietf:params:oauth:client-assertion-type:jwt-bearer',
-            'client_assertion': client_secret,
-            'grant_type': 'urn:ietf:params:oauth:grant-type:jwt-bearer',
-            'assertion': authorization_code,
-            'redirect_uri': redirect_uri
-        }
-
-        response = requests.post(token_url, data=data)
-        response_data = response.json()
-
-        # Step 3: Use the access token
-        ado_pat = response_data.get('access_token')
+        ado_pat=request.session.get('token')
+        if not ado_pat:
+            authorization_code = request.data.get('code')
+            token_url = "https://app.vssps.visualstudio.com/oauth2/token"
+            redirect_uri="https://acr-front-automated-code-review.apps.opendev.hq.globalcashaccess.us/"
+            data = {
+                'client_assertion_type': 'urn:ietf:params:oauth:client-assertion-type:jwt-bearer',
+                'client_assertion': client_secret,
+                'grant_type': 'urn:ietf:params:oauth:grant-type:jwt-bearer',
+                'assertion': authorization_code,
+                'redirect_uri': redirect_uri
+            }
+    
+            response = requests.post(token_url, data=data)
+            response_data = response.json()
+    
+            # Step 3: Use the access token
+            ado_pat = response_data.get('access_token')
+            request.session['token']=ado_pat
         ado_url = request.data.get('url')
 
         if not (org_standards and ado_pat and ado_url) :
