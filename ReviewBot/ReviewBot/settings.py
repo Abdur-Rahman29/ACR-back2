@@ -75,7 +75,7 @@ MIDDLEWARE = [
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",  # Allow requests from your React frontend
+    "https://acr-front-code-review.apps.opendev.hq.globalcashaccess.us",  # Allow requests from your React frontend
 ]
 CSRF_COOKIE_SECURE = False  # Set to True if you're using HTTPS in production
 
