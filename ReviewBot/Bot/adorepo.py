@@ -35,6 +35,7 @@ def ado_repo(request):
             # Step 3: Use the access token
             ado_pat = response_data.get('access_token')
             request.session['token']=ado_pat
+            print('im in if')
         ado_url = request.data.get('url')
         print(ado_pat)
 
