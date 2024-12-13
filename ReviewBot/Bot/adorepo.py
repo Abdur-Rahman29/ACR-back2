@@ -103,7 +103,7 @@ def ado_repo(request):
                     'content':file_content
 
                 })
-                print('file path: ',reviews_data['file_path'])
+                print('file path: ',reviews_data.display_path)
 
         return JsonResponse({'reviews_data': reviews_data}, safe=False)
 
