@@ -82,7 +82,7 @@ CSRF_COOKIE_SECURE = False  # Set to True if you're using HTTPS in production
 CSRF_COOKIE_HTTPONLY = False  # Allow access to CSRF cookie from JavaScript (if required)
 # CSRF settings for cross-origin requests
 CSRF_TRUSTED_ORIGINS = [
-    "http://localhost:3000",  # Trust React frontend for CSRF
+    "https://acr-front-code-review.apps.opendev.hq.globalcashaccess.us",  # Trust React frontend for CSRF
 ]
 ROOT_URLCONF = 'ReviewBot.urls'
 
