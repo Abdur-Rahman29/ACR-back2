@@ -73,10 +73,25 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
-CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
-    "https://acr-front-code-review.apps.opendev.hq.globalcashaccess.us",  # Allow requests from your React frontend
+    "https://acr-front-code-review.apps.opendev.hq.globalcashaccess.us",
 ]
+
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_METHODS = [
+    "GET",
+    "POST",
+    "OPTIONS",
+]
+
+CORS_ALLOW_HEADERS = [
+    "content-type",
+    "authorization",
+    "accept",
+    "origin",
+    "x-csrftoken",
+]
+
 CSRF_COOKIE_SECURE = False  # Set to True if you're using HTTPS in production
 
 CSRF_COOKIE_HTTPONLY = False  # Allow access to CSRF cookie from JavaScript (if required)
