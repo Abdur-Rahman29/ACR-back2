@@ -96,6 +96,7 @@ def ado_repo(request):
                     file_content, org_standards_content, client, 'llama3-8b-8192',lang,
                     display_path
                 )
+                
 
                 reviews_data.append({
                     'file_path': display_path,
@@ -103,7 +104,7 @@ def ado_repo(request):
                     'content':file_content
 
                 })
-                print('file path: ',reviews_data.display_path)
+                print(display_path)
 
         return JsonResponse({'reviews_data': reviews_data}, safe=False)
 
