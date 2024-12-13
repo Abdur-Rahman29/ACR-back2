@@ -1,1 +1,1 @@
-groq_api_key='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'
+groq_api_key='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'
