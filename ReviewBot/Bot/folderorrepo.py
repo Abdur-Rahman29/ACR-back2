@@ -25,6 +25,7 @@ def initial_process(request):
         code_files, folder_path_or_error = process_folder_or_repo(directory)
         if code_files is None:
             return JsonResponse({'error': folder_path_or_error}, status=400)
+        print('code files: ',code_files)
 
         # Load organizational standards content
         org_standards_content = load_documents_from_files(org_standards)
@@ -50,6 +51,7 @@ def initial_process(request):
                 'content':file_content
 
             })
+            print('reviews data: ',reviews_data)
 
         # Store necessary data in session (if needed)
         request.session['code_files'] = code_files
