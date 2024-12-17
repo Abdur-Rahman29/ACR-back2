@@ -1,10 +1,10 @@
 # Bot/urls.py
 
 from django.urls import path
-from . import singlefile,folderorrepo,pr_review,adorepo,ado_pr,token
+from . import singlefile,folderorrepo,pr_review,adorepo,ado_pr,my_token
 urlpatterns = [
-    path('review/git-token/', token.git_token_generation, name='git_token_generation'),
-    path('review/ado-token/', token.ado_token_generation, name='ado_token_generation'),
+    path('review/git-token/', my_token.git_token_generation, name='git_token_generation'),
+    path('review/ado-token/', my_token.ado_token_generation, name='ado_token_generation'),
     path('review/single-file/', singlefile.review_single_file, name='review_single_file'),
     path('review/folder-repo/',folderorrepo.initial_process , name='review_folder_or_repo'),
     path('review/ado-repo/', adorepo.ado_repo, name='ado_repo'),
