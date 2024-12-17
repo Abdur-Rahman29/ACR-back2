@@ -18,8 +18,6 @@ client = Groq(api_key=groq_api_key)
 from github import Github
 from urllib.parse import urlparse
 from rest_framework.response import Response
-GITHUB_CLIENT_ID = "Ov23liAoWBA8cFwLh4ds"
-GITHUB_CLIENT_SECRET = "97bba278b113c6d649b591b6b30483146b9b274f"
 
 
 @api_view(['POST'])
@@ -29,39 +27,7 @@ def handle_pr_operations(request):
     Fetch all PRs and their associated files using the GitHub token and repository URL.
 
     """
-    token = request.session.get('token')
-    
-    if not token:
-        # If token not in session, proceed to fetch it
-        code = request.data.get("code")
-
-        if not code:
-            return JsonResponse(
-                {"error": "Authorization code not provided"},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-
-        # GitHub API Token Exchange
-        token_url = "https://github.com/login/oauth/access_token"
-        headers = {"Accept": "application/json"}
-        data = {
-            "client_id": GITHUB_CLIENT_ID,
-            "client_secret": GITHUB_CLIENT_SECRET,
-            "code": code,
-        }
-
-        response = requests.post(token_url, headers=headers, data=data)
-
-        if response.status_code == 200:
-            token = response.json().get("access_token")
-            # Store token in session for future use
-            request.session['token'] = token
-        else:
-            error = response.json().get("error", "Token exchange failed")
-            return JsonResponse(
-                {"error": error},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
+    token = request.session.get('gittoken')
     org_standards = request.FILES.get('orgFile')
     org_standards=load_documents_from_files(org_standards)
     request.session['org_file']=org_standards
@@ -142,7 +108,7 @@ def file_category(request):
 
     org_standards_content = org_file
 
-    token = request.session.get('token')
+    token = request.session.get('gittoken')
     repo_url = request.session.get('repo_url')
 
     if not token or not repo_url:
@@ -259,7 +225,7 @@ def approve_pr(request):
     """
     Approve (merge) a pull request using the GitHub token and PR number.
     """
-    token = request.session.get('token')
+    token = request.session.get('gittoken')
     repo_url = request.session.get('repo_url')
     pr_number = request.data.get('pr_number')
 
