@@ -118,6 +118,8 @@ def ado_token_generation(request):
 
         response = requests.post(token_url, data=data)
         response_data = response.json()
+        response_data = response.json()
+        print(response_data)
 
         # Step 3: Use the access token
         if requests.status_codes==200:
