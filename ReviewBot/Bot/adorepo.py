@@ -16,26 +16,9 @@ client_secret="eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Im9PdmN6NU1fN3AtSGpJS
 def ado_repo(request):
     try:
         org_standards = request.FILES.get('org_file')
-        ado_pat = request.session.get('token')
+        ado_pat = request.session.get('adotoken')
         # Debugging ado_pat
         print(f"Initial ado_pat from session: {ado_pat}")
- 
-        if not ado_pat:
-            authorization_code = request.data.get('code')
-            token_url = "https://app.vssps.visualstudio.com/oauth2/token"
-            redirect_uri = "https://acr-front-code-review.apps.opendev.hq.globalcashaccess.us/"
-            data = {
-                'client_assertion_type': 'urn:ietf:params:oauth:client-assertion-type:jwt-bearer',
-                'client_assertion': client_secret,
-                'grant_type': 'urn:ietf:params:oauth:grant-type:jwt-bearer',
-                'assertion': authorization_code,
-                'redirect_uri': redirect_uri
-            }
-            response = requests.post(token_url, data=data)
-            response_data = response.json()
-            ado_pat = response_data.get('access_token')
-            request.session['token'] = ado_pat
-            print(f"PAT retrieved: {ado_pat}")
         ado_url = request.data.get('url')
         print(f"ADO URL: {ado_url}")
  
