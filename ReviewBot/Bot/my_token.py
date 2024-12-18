@@ -136,8 +136,8 @@ def ado_token_generation(request):
     user_response = requests.get(user_url, headers=headers)
     if user_response.status_code == 200:
         user_data = user_response.json()
-        username = user_data.get("displayName")
-        email = user_data.get("emailAddress")
+        username = user_data['coreAttributes']['DisplayName']['value']
+        email = user_data['coreAttributes']['EmailAddress']['value']
         
         return JsonResponse(
             {
