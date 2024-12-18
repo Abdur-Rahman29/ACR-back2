@@ -117,19 +117,16 @@ def ado_token_generation(request):
         }
 
         response = requests.post(token_url, data=data)
-        response_data = response.json()
-        response_data = response.json()
-        print(response_data)
-
-        # Step 3: Use the access token
-        if requests.status_codes==200:
+        if response.status_code == 200:
+            response_data = response.json()
             ado_pat = response_data.get('access_token')
-            request.session['adotoken']=ado_pat
+            request.session['adotoken'] = ado_pat
         else:
             error = response.json().get("error", "Token exchange failed")
             return JsonResponse(
                 {"error": error},
-                status=status.HTTP_400_BAD_REQUEST)
+                status=status.HTTP_400_BAD_REQUEST
+            )
     user_url = "https://app.vssps.visualstudio.com/_apis/profile/profiles/me?api-version=7.1-preview.1"
     headers = {"Authorization": f"Bearer {ado_pat}"}
 
