@@ -61,6 +61,7 @@ SESSION_ENGINE = 'django.contrib.sessions.backends.db'  # Ensure this is set
 SESSION_COOKIE_NAME = 'sessionid'
 SESSION_COOKIE_SAMESITE = 'Lax'  # Important for cross-origin cookies
 SESSION_COOKIE_SECURE = False  # Only set to True if you're using HTTPS
+SESSION_COOKIE_AGE = 3600
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
