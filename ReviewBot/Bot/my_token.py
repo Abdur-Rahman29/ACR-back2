@@ -117,7 +117,9 @@ def ado_token_generation(request):
         }
 
         response = requests.post(token_url, data=data)
-        print(response)
+        print('auth code: ',authorization_code)
+        response_data = response.json()
+        print(response_data)
         if response.status_code == 200:
             response_data = response.json()
             ado_pat = response_data.get('access_token')
