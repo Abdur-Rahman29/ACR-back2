@@ -40,7 +40,7 @@ def git_token_generation(request):
             # Store token in session for future use
             request.session['gittoken'] = token
         else:
-            error = response.json().get("error", "Token exchange failed")
+            error = response.json().get("error", "Git Token exchange failed")
             return JsonResponse(
                 {"error": error},
                 status=status.HTTP_400_BAD_REQUEST,
@@ -123,7 +123,7 @@ def ado_token_generation(request):
             ado_pat = response_data.get('access_token')
             request.session['adotoken'] = ado_pat
         else:
-            error = response.json().get("error", "Token exchange failed")
+            error = response.json().get("error", "ADO Token exchange failed")
             return JsonResponse(
                 {"error": error},
                 status=status.HTTP_400_BAD_REQUEST
